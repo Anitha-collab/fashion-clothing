@@ -1,0 +1,64 @@
+def display_clothing_info(brand_name, product_name, price, size, color):
+    print(f"\nBrand: {brand_name}")
+    print(f"Product: {product_name}")
+    print(f"Price: ${price:.2f}")
+    print(f"Size: {size}")
+    print(f"Color: {color}")
+
+def get_multiple_clothing_info():
+    clothing_items = []
+    while True:
+        brand_name = input("Enter the brand name (or 'exit' to stop): ")
+        if brand_name.lower() == 'exit':
+            break
+        product_name = input("Enter the product name: ")
+        price = float(input("Enter the price: "))
+        size = input("Enter the size: ")
+        color = input("Enter the color: ")
+        clothing_items.append((brand_name, product_name, price, size, color))
+    return clothing_items
+def read_multiple_clothing_info(filename):
+    clothing_items = []
+    with open(filename, 'r') as file:
+        while True:
+            try:
+                brand_name = file.readline().strip()
+                product_name = file.readline().strip()
+                price = float(file.readline().strip())
+                size = file.readline().strip()
+                color = file.readline().strip()
+clothing_items.append((brand_name, product_name, price, size, color))
+            except ValueError:
+                break  # Break on any value error (e.g., EOF)
+    return clothing_items
+if _name_ == "_main_":
+    # Display clothing items from the file
+    clothing_items = read_multiple_clothing_info('clothing_info_multiple.txt')
+    for item in clothing_items:
+        display_clothing_info(*item)
+
+    # Optionally, allow user to input multiple clothing items
+    print("\nEnter multiple clothing items (type 'exit' for brand name to stop):")
+    clothing_items = get_multiple_clothing_info()
+    for item in clothing_items:
+        display_clothing_info(*item)
+
+    # Additional functionality can be added here, such as saving new entries to a file
+    save_to_file = input("\nWould you like to save the entered clothing items to a file? (yes/no): ")
+    if save_to_file.lower() == 'yes':
+        with open('new_clothing_info.txt', 'w') as file:
+            for item in clothing_items:
+                file.write(f"{item[0]}\n{item[1]}\n{item[2]}\n{item[3]}\n{item[4]}\n")
+        print("Clothing items saved to new_clothing_info.txt")
+
+    # Optionally, read and display the saved clothing items
+    read_saved_items = input("\nWould you like to read the saved clothing items? (yes/no): ")
+    if read_saved_items.lower() == 'yes':
+        saved_clothing_items = read_multiple_clothing_info('new_clothing_info.txt
+ print("\nSaved Clothing Items:")
+        for item in saved_clothing_items:
+            display_clothing_info(*item)
+
+    # Final message to the user
+    print("\nThank you for using the Clothing Brand application!")
+
